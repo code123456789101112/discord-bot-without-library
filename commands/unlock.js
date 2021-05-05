@@ -11,7 +11,9 @@ module.exports = {
         await axios.put(`/channels/${message.channel_id}/permissions/${message.guild_id}`, { "allow": 0x800 })
             .catch(err => console.log(err.response.data));
 
-        await axios.post(`/channels/${message.channel_id}/messages`, { "content": `Unlocked <#${message.channel_id}>.`, "tts": false })
-            .catch(err => console.log(err.response.data));
+        await axios.post(`/channels/${message.channel_id}/messages`, {
+            "content": `Unlocked <#${message.channel_id}>.`,
+            "tts": false
+        }).catch(err => console.log(err.response.data));
     }
 }
