@@ -34,8 +34,8 @@
                     "intents": 513,
                     "properties": {
                         "os": "windows",
-                        "$browser": "library",
-                        "$device": "library"
+                        "$browser": "my_library",
+                        "$device": "my_library"
                     }
                 }
             });
