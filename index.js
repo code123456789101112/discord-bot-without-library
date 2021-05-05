@@ -1,15 +1,15 @@
+const fs = require("fs");
+const { token, baseURL } = require("./config.json");
+
+const Collection = require("@discordjs/collection");
+const commands = new Collection();
+
+const axios = require("axios");
+axios.defaults.baseURL = baseURL;
+
+const WebSocket = require("ws");
+
 (async () => {
-    const fs = require("fs");
-    const { token, baseURL } = require("./config.json");
-
-    const Collection = require("@discordjs/collection");
-    const commands = new Collection();
-
-    const axios = require("axios");
-    axios.defaults.baseURL = baseURL;
-
-    const WebSocket = require("ws");
-
     const res = await axios.get("/gateway");
     const socket = new WebSocket(res.data.url);
 
