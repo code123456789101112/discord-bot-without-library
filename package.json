@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/collection": "^0.1.6",
     "axios": "^0.21.1",
     "ws": "^7.4.5",
     "xmlhttprequest": "^1.8.0"

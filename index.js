@@ -1,9 +1,12 @@
 (async () => {
     const fs = require("fs");
-    const { token } = require("./config.json");
+    const { token, baseURL } = require("./config.json");
+
+    const Collection = require("@discordjs/collection");
+    const commands = new Collection();
 
     const axios = require("axios");
-    axios.defaults.baseURL = "https://discord.com/api/v9";
+    axios.defaults.baseURL = baseURL;
 
     const WebSocket = require("ws");
 
@@ -40,9 +43,18 @@
         }
 
         const eventFiles = fs.readdirSync("./events/");
+        const commandFiles = fs.readdirSync("./commands/");
+        
         for (const file of eventFiles) {
             const eventName = file.split(".")[0];
             if (op.t === eventName.toUpperCase()) require(`./events/${file}`)(op);
         }
+
+        for (const file of commandFiles) {
+            const command = require(`./commands/${file}`);
+            commands.set(command.name, command);
+        }
+
+        module.exports = commands;
     });
 })();
