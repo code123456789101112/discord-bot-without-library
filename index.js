@@ -11,21 +11,19 @@ const WebSocket = require("ws");
 
 (async () => {
     const res = await axios.get("/gateway");
-    const socket = new WebSocket(res.data.url);
+    const ws = new WebSocket(res.data.url);
 
-    let y = 0;
-    socket.on("message", async o => {
-        y++;
-
+    let op10 = true;
+    ws.on("message", async o => {
         const op = JSON.parse(o);
 
         const data = JSON.stringify({ "op": 1, "d": op.s });
-        if (op.op === 1) socket.send(data);
+        if (op.op === 1) ws.send(data);
 
-        if (y == 1) {
+        if (op10) {
             const random = Math.random();
-            setTimeout(() => socket.send(data), op.d.heartbeat_interval * random);
-            setInterval(() => socket.send(data), op.d.heartbeat_interval);
+            setTimeout(() => ws.send(data), op.d.heartbeat_interval * random);
+            setInterval(() => ws.send(data), op.d.heartbeat_interval);
 
             const op2 = JSON.stringify({
                 "op": 2,
@@ -39,7 +37,9 @@ const WebSocket = require("ws");
                     }
                 }
             });
-            socket.send(op2);
+            ws.send(op2);
+
+            op10 = false;
         }
 
         const eventFiles = fs.readdirSync("./events/");

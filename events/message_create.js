@@ -6,7 +6,7 @@ axios.defaults.headers.common["Authorization"] = auth;
 axios.defaults.baseURL = baseURL;
 
 module.exports = async (event) => {
-    const message = event.d;
+    const  { d: message } = event;
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
